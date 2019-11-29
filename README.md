@@ -2,7 +2,9 @@
 Windows GUI/Execution Engine for Atomic Red Team Atomics
 
 # Atomic Red Team Overview
-The Atomic Red Team project is an open source collection of behavior definitions mapping to the MITRE ATT&CK framework. These can be used to generate Indicators of Compromise (IoCs) and to test the ability to detect and respond to them. 
+The Atomic Red Team project, https://atomicredteam.io/, is an open source collection of behavior definitions mapping to the MITRE ATT&CK framework maintained by Red Canary. Red Canary describes them as "Our Atomic Red Team tests are small, highly portable detection tests mapped to the MITRE ATT&CK Framework. Each test is designed to map back to a particular tactic. This gives defenders a highly actionable way to immediately start testing their defenses against a broad spectrum of attacks."
+These can be used to generate Indicators of Compromise (IoCs) and to test the ability to detect and respond to them. 
+
 
 # Tevora Execution Engine 
 Tevora developed an execution engine for attack definitions in the Atomic Red Team project that allows for automated running and reporting of the attacks defined therein on Windows systems. The execution engine runs through these attacks and generates a test plan and report based on the ingested and ran Atomics. This allows for running through all Atomics automatically and basic logging of the performed activity. 
@@ -11,7 +13,7 @@ Tevora developed an execution engine for attack definitions in the Atomic Red Te
 Installation
 ------------
 
-The Tevora Atomic Red Team execution engine consist of two components:
+The Tevora Atomic Red Team execution engine needs two components:
 
 1. The folder of Atomic definitions
 
@@ -21,9 +23,11 @@ In order to run the red team simulation, the Execution Engine exe must be opened
 
 ***Installation Steps:***
 
-1. Download the Tevora Red Team Simulation .zip file from the Tevora portal.
+1. Open the .sln file in visual studio and compile the exe
 
-2. Select a system to run the tests on.
+2. Download the atomics you wish to run from: https://github.com/redcanaryco/atomic-red-team/tree/master/atomics
+
+3. Select a system to run the tests on.
 
 a. Tevora recommends running the test on a standard newly provisioned employee workstation with normal EDR/AV software installed in detect only mode
 
@@ -35,14 +39,14 @@ c. Some atomics are destructive, in that they add things such as registry autoru
 
 d. For this same reason, Tevora recommends not running this tool on production systems unless careful tuning and removal of destructive atomics is done, or if only single or few atomics that are known to not modify the system are run.
 
-3. Extract the zip folder to a location of your choosing.
+4. Extract the zip folder to a location of your choosing.
 
-4. The atomic red team execution engine is now ready to be run.
+5. The atomic red team execution engine is now ready to be run.
 
 Execution
 ---------
 
-1. Open the TevoraRedSim.exe file
+1. Open the compiled redsim .exe file
 
 2. Select "Load Atomics" from the bottom right context menu
 

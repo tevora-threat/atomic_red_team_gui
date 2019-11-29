@@ -1,0 +1,12 @@
+{
+
+  "vars": {
+    "domain": "client.dc"
+  }
+  "input_args": {
+    "T110": {
+      "computername": "testcomputer1",
+      "domain ": "$$domain$$"
+    }
+  }
+}
