@@ -1,9 +1,10 @@
 # atomic_red_team_gui
 Windows GUI/Execution Engine for Atomic Red Team Atomics
 
-#Atomic Red Team Overview
+# Atomic Red Team Overview
 The Atomic Red Team project is an open source collection of behavior definitions mapping to the MITRE ATT&CK framework. These can be used to generate Indicators of Compromise (IoCs) and to test the ability to detect and respond to them. 
-#Tevora Execution Engine 
+
+# Tevora Execution Engine 
 Tevora developed an execution engine for attack definitions in the Atomic Red Team project that allows for automated running and reporting of the attacks defined therein on Windows systems. The execution engine runs through these attacks and generates a test plan and report based on the ingested and ran Atomics. This allows for running through all Atomics automatically and basic logging of the performed activity. 
 
 
