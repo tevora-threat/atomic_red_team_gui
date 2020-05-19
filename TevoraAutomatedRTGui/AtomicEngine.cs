@@ -41,8 +41,14 @@ namespace TevoraAutomatedRTGui
 
             foreach (string atomic_dir in atomic_dirs)
             {
-                var atomic = new Atomic(atomic_dir);
-                this.atomics.Add(atomic);
+                try
+                {
+                    var atomic = new Atomic(atomic_dir);
+                    this.atomics.Add(atomic);
+                }
+                catch {
+                    Console.WriteLine("Failed to load atomic for dir: " + atomic_dir);
+                }
 
             }
             this.GenerateRunables();
