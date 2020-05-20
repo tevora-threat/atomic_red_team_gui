@@ -26,6 +26,7 @@
                         <GridViewColumn Header="Category" Width="200" DisplayMemberBinding="{Binding display_name}" />
                         <GridViewColumn Header="Test Name" Width="200" DisplayMemberBinding="{Binding name}" />
                         <GridViewColumn Header="Command" Width="600" DisplayMemberBinding="{Binding command}" />
+                        <GridViewColumn Header="Cleanup Command" Width="600" DisplayMemberBinding="{Binding cleanup_command}" />
 
 
                     </GridView>
@@ -36,6 +37,7 @@
             <Button Name="LoadAtomicsButton" Content="Load Atomics" HorizontalAlignment="Right" Margin="0,0,179,59" VerticalAlignment="Bottom" Width="164" Click="LoadAtomicsClick"/>
             <Label Name="AtomicsLoadedLabel" Content="0 atomics loaded" HorizontalAlignment="Left" Margin="10,0,0,53" VerticalAlignment="Bottom" RenderTransformOrigin="-0.841,-0.13" Width="328"/>
             <ProgressBar Name="ProgressBar" Height="19" Margin="10,0,10,29" VerticalAlignment="Bottom" ValueChanged="ProgressBar_ValueChanged"/>
+            <Button Name="StartCleanupButton" Content="Run Cleanup Commands" HorizontalAlignment="Right" Margin="0,0,490,59" VerticalAlignment="Bottom" Width="164" IsEnabled="False" Click="StartCleanupButton_Click"/>
 
             <Label Name="ProgressDivider" Content="0/0" HorizontalAlignment="Left" Margin="10,0,0,5" VerticalAlignment="Bottom" RenderTransformOrigin="-0.841,-0.13" Width="762" Height="24"/>
             <Button Name="StartSimulationButton" Content="Start Simulation" HorizontalAlignment="Right" Margin="0,0,10,59" VerticalAlignment="Bottom" Width="164" IsEnabled="False" Click="StartSimulationButton_Click"/>

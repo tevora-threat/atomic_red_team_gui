@@ -6,7 +6,7 @@ using System.IO;
 using System.Diagnostics;
 using CsvHelper;
 using System.Threading;
-
+using System.Management.Automation; 
 namespace TevoraAutomatedRTGui
 {
     static class Utils
@@ -32,7 +32,8 @@ namespace TevoraAutomatedRTGui
         }
 
         /* https://stackoverflow.com/questions/1469764/run-command-prompt-commands */
-        public static string RunCommandInBackground(string command, string name)
+        public static string RunCommandInBackground(string command, string name, string context_dir =@"c:\users\public")
+  
         {
             
                 var proc1 = new ProcessStartInfo();
@@ -42,13 +43,16 @@ namespace TevoraAutomatedRTGui
             proc1.WindowStyle = ProcessWindowStyle.Hidden;
 
 
-            proc1.WorkingDirectory = @"C:\Windows\System32";
+            proc1.WorkingDirectory = context_dir;
 
                 if (name == "powershell")
                 {
                 command = "\"" + command.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace('\n',';') + "\"";
                     command = "Powershell.exe -Command " + command;
-                Console.WriteLine(command);
+                }
+                else
+                {
+                command = command.Replace("\n", "&");
                 }
                 proc1.FileName = @"C:\Windows\System32\cmd.exe";
                 //proc1.Verb = "runas";
@@ -101,15 +105,33 @@ namespace TevoraAutomatedRTGui
             }
 
         }
-        public static void ReportToCsv(Report report, string output_dir)
+        public static void ReportToCsv(Report report, string output_dir, string prefix="redteamsim_log_")
         {
 
-            string path = Path.Combine(output_dir,"redteamsim_log_" + report.started.ToString("yyyyMMddHHmmssfff") + ".csv");
+            string path = Path.Combine(output_dir,prefix + report.started.ToString("yyyyMMddHHmmssfff") + ".csv");
             using (var writer = new StreamWriter(path))
             using (var csv = new CsvWriter(writer))
             {
                 csv.WriteRecords(report.results);
             }
+        }
+
+
+        public static string EvaluatePS(string expression)
+        {
+
+            PowerShell psinstance = PowerShell.Create().AddScript(expression);
+            try{
+                var results = psinstance.Invoke();
+
+                return results[0].ToString();
+              
+            }
+            catch (Exception e)
+            {
+                return "Powershell Execution Failed " + e ;
+            }
+
         }
         public static void RunnablesToCsv(List<AtomicRunnable> report, string output_dir)
         {

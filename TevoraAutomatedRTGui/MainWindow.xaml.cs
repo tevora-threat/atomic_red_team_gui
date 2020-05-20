@@ -62,18 +62,14 @@ namespace TevoraAutomatedRTGui
         private void LoadAtomics()
 
         {
-            try
-            {
+            
                 this.atomic_engine = new AtomicEngine(this.atomic_dir, this.output_dir, this.config_path);
-            }
-            catch
-            {
-                System.Windows.MessageBox.Show("Ensure you have chosen valid directories for your atomics and output folder");
-                return;
-            }
+            
+      
             ProgressBar.IsIndeterminate = true;
 
             StartSimulationButton.IsEnabled = true;
+            StartCleanupButton.IsEnabled = true; 
             AtomicsLoadedLabel.Content = this.atomic_engine.atomics.Count + " atomics loaded, " + this.atomic_engine.atomic_runnables.Count + " commands staged";
             AtomicsListView.ItemsSource = this.atomic_engine.atomic_runnables;
             ProgressBar.IsIndeterminate = false;
@@ -130,20 +126,55 @@ namespace TevoraAutomatedRTGui
             {
                 Task<Report> task = Task.Run(() => this.atomic_engine.RunTests(this));
                 StartSimulationButton.IsEnabled = false;
+                StartCleanupButton.IsEnabled = false;
+
 
                 Report report = await task;
                 Utils.ReportToCsv(report, this.output_dir);
             }
-            catch
+            catch (Exception exception)
             {
+                System.Windows.MessageBox.Show("Error: " + exception);
 
             }
             StartSimulationButton.IsEnabled = true;
+            StartCleanupButton.IsEnabled = true;
+
             this.running = false;
             LoadAtomicsButton.IsEnabled = true;
 
         }
 
+        private async void StartCleanupButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.running)
+            {
+                return;
+            }
+            this.running = true;
+            LoadAtomicsButton.IsEnabled = false;
+
+
+            try
+            {
+                Task<Report> task = Task.Run(() => this.atomic_engine.RunCleanup(this));
+                StartSimulationButton.IsEnabled = false;
+                StartCleanupButton.IsEnabled = false;
+
+                Report report = await task;
+                Utils.ReportToCsv(report, this.output_dir, "cleanup_log_");
+            }
+            catch (Exception exception)
+            {
+                System.Windows.MessageBox.Show("Error: " + exception);
+            
+            }
+            StartSimulationButton.IsEnabled = true;
+            StartCleanupButton.IsEnabled = true;
+
+            this.running = false;
+            LoadAtomicsButton.IsEnabled = true;
+        }
         public void UpdateStatus(SimulationStatusUpdate status)
         {
 

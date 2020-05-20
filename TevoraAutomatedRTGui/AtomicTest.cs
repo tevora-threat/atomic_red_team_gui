@@ -23,7 +23,10 @@ namespace TevoraAutomatedRTGui
     {
         public string name{get; set;}
         public string command{get; set;}
+        public string cleanup_command { get; set; }
+
         public string steps { get; set; }
+        public string elevation_required { get; set; }
 
     }
 
@@ -32,6 +35,8 @@ namespace TevoraAutomatedRTGui
     {
         public string name{get; set;}
         public string description{get; set;}
+        public string auto_generated_guid { get; set; }
+
         public Dictionary<string, InputArgument> input_arguments{get; set;}
         public HashSet<string> supported_platforms{get; set;}
         public Executor executor { get; set; }
@@ -51,7 +56,9 @@ namespace TevoraAutomatedRTGui
       public string display_name { get; set; }
       public string name { get; set; }
        public string command { get; set; }
-       public string attack_technique { get; set; }
+        public string cleanup_command { get; set; }
+
+        public string attack_technique { get; set; }
         public string type { get; set; }
 
 
@@ -83,7 +90,7 @@ namespace TevoraAutomatedRTGui
             this.path = path;
             this.yaml = Utils.LoadYamlFromPath(path);
 
-            var deserializer = new YamlDotNet.Serialization.DeserializerBuilder().Build();
+            var deserializer = new YamlDotNet.Serialization.DeserializerBuilder().IgnoreUnmatchedProperties().Build();
             this.atomic_yaml = deserializer.Deserialize<AtomicYaml>(this.yaml);
 
         }
@@ -91,7 +98,7 @@ namespace TevoraAutomatedRTGui
 
     
     
-
+        // not used, execution engine handles test runs instead. 
         public void RunTest()
         {
             foreach (AtomicRunnable atomic_runnable in this.atomic_runnables)
