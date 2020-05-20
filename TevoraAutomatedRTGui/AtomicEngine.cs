@@ -145,10 +145,11 @@ namespace TevoraAutomatedRTGui
         {
             try {
                 Utils.RunnablesToCsv(this.atomic_runnables, window.output_dir);
+                MessageBox.Show("Test plan exported to " + window.output_dir);
             }
-            catch
+            catch (Exception error)
             {
-             
+                MessageBox.Show("Error Exporting Test Plan: " + error);
             }
             
         }
